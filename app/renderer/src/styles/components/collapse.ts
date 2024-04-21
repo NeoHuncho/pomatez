@@ -1,11 +1,13 @@
 import styled from "styled-components/macro";
 
-export const StyledCollapse = styled.div`
+export const StyledCollapse = styled.div<{ disabled?: boolean }>`
   width: 100%;
   min-height: 4rem;
 
   display: grid;
   grid-template-rows: 4rem;
+  opacity: ${(p) => p.disabled && "0.5"};
+  pointer-events: ${(p) => p.disabled && "none"};
 `;
 
 export const StyledCollapseHeading = styled.h4<{ open?: boolean }>`

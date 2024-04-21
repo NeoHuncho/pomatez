@@ -28,7 +28,6 @@ export const enum NotificationSounds {
 export const enum NotificationTypes {
   NONE = "none",
   NORMAL = "normal",
-  EXTRA = "extra",
 }
 
 export type SettingsPayload<T extends keyof SettingTypes> =

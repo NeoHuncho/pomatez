@@ -1,4 +1,4 @@
-import WarningBell from "assets/audios/warning-bell.wav";
+import WarningBell from "assets/audios/notification-bell.wav";
 import { SVG } from "components";
 import { useAppDispatch, useAppSelector } from "hooks/storeHooks";
 import React, { useCallback, useEffect, useState } from "react";

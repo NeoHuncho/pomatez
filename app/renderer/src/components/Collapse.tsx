@@ -11,12 +11,14 @@ type Props = {
   children?: React.ReactNode;
   title?: string;
   heightResponsive?: boolean;
+  disabled?: boolean;
 };
 
 const Collapse: React.FC<Props> = ({
   children,
   title,
   heightResponsive = false,
+  disabled = false,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -25,7 +27,7 @@ const Collapse: React.FC<Props> = ({
   };
 
   return (
-    <StyledCollapse>
+    <StyledCollapse disabled={disabled}>
       {title && (
         <StyledCollapseHeading
           as={"button"}

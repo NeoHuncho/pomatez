@@ -47,15 +47,6 @@ export const StyledSectionHeading = styled.h4`
   text-transform: uppercase;
 `;
 
-export const StyleSectionSubHeading = styled.h5`
-  font-size: 0.9rem;
-  font-weight: 500;
-
-  color: var(--color-disabled-text);
-
-  text-transform: uppercase;
-`;
-
 export const StyledStarButton = styled(StyledButtonSecondary)`
   & > svg {
     margin-left: -1rem;
@@ -82,8 +73,14 @@ export const StyledSectionSticky = styled.div`
   padding-top: 2rem;
 `;
 
-export const StyledSectionSubSection = styled.div`
+export const StyledNotificationsSectionContainer = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+`;
+
+export const StyledNotificationsSoundsCheckboxesContainer = styled.div`
+  display: flex;
   gap: 1rem;
 `;

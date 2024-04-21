@@ -12,6 +12,7 @@ export * from "./navigation";
 export * from "./popper";
 export * from "./range";
 export * from "./shortcuts";
+export * from "./soundSelect";
 export * from "./svg";
 export * from "./textarea";
 export * from "./time";

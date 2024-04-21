@@ -6,14 +6,21 @@ import { isEqualToOne, padNum } from "utils";
 
 import notificationIcon from "assets/logos/notification-dark.png";
 
-import breakFinishedWav from "assets/audios/break-finished.wav";
-import focusFinishedWav from "assets/audios/focus-finished.wav";
-import sessionCompletedWav from "assets/audios/session-completed.wav";
-import sixtySecondsLeftWav from "assets/audios/sixty-seconds-left.wav";
-import specialBreakStartedWav from "assets/audios/special-break-started.wav";
-import thirtySecondsLeftWav from "assets/audios/thirty-seconds-left.wav";
+import breakFinishedAssistanceWav from "assets/audios/voiceAssistance/break-finished.wav";
+import focusFinishedAssistanceWav from "assets/audios/voiceAssistance/focus-finished.wav";
+import sessionCompletedAssistanceWav from "assets/audios/voiceAssistance/session-completed.wav";
+import sixtySecondsLeftAssistanceWav from "assets/audios/voiceAssistance/sixty-seconds-left.wav";
+import specialBreakStartedAssistanceWav from "assets/audios/voiceAssistance/special-break-started.wav";
+import thirtySecondsLeftAssistanceWav from "assets/audios/voiceAssistance/thirty-seconds-left.wav";
+
 import { useAppDispatch, useAppSelector } from "hooks/storeHooks";
 import { TimerStatus } from "store/timer/types";
+
+import focusFinishedMp3 from "assets/audios/focus-finished.mp3";
+import longBreakFinishedMp3 from "assets/audios/long-break-finished.mp3";
+import sessionFinishedMp3 from "assets/audios/session-finished.mp3";
+import shortBreakFinishedMp3 from "assets/audios/short-break-finished.mp3";
+import sixtySecondsLeftBreakMp3 from "assets/audios/sixty-seconds-left-break.mp3";
 
 type CounterProps = {
   count: number;
@@ -127,7 +134,7 @@ const CounterProvider: React.FC = ({ children }) => {
                       : "minutes"
                   } special break.`,
                 },
-                specialBreakStartedWav
+                specialBreakStartedAssistanceWav
               );
               return;
             }
@@ -199,41 +206,50 @@ const CounterProvider: React.FC = ({ children }) => {
       [TimerStatus.STAY_FOCUS]: {
         message: "Focus time finished.",
         nextType: TimerStatus.SHORT_BREAK,
-        sound: focusFinishedWav,
+        sound: settings.enableVoiceAssistance
+          ? focusFinishedAssistanceWav
+          : focusFinishedMp3,
       },
       [TimerStatus.SHORT_BREAK]: {
         message: "Break time finished.",
         nextType: TimerStatus.STAY_FOCUS,
-        sound: breakFinishedWav,
+        sound: settings.enableVoiceAssistance
+          ? breakFinishedAssistanceWav
+          : shortBreakFinishedMp3,
       },
       [TimerStatus.LONG_BREAK]: {
         message: "Break time finished.",
         nextType: TimerStatus.STAY_FOCUS,
-        sound: breakFinishedWav,
+        sound: settings.enableVoiceAssistance
+          ? breakFinishedAssistanceWav
+          : longBreakFinishedMp3,
       },
       [TimerStatus.SPECIAL_BREAK]: {
         message: "Break time finished.",
         nextType: TimerStatus.STAY_FOCUS,
-        sound: sessionCompletedWav,
+        sound: settings.enableVoiceAssistance
+          ? sessionCompletedAssistanceWav
+          : sessionFinishedMp3,
       },
     };
-    if (settings.notificationType === "extra") {
-      if (count === 61) {
-        notification(
-          "60 seconds left.",
-          { body: timerMessages[timer.timerType] },
-          settings.enableVoiceAssistance && sixtySecondsLeftWav
-        );
-      } else if (
-        count === 31 &&
-        timer.timerType === TimerStatus.STAY_FOCUS
-      ) {
-        notification(
-          "30 seconds left.",
-          { body: "Pause all media playing if there's one." },
-          settings.enableVoiceAssistance && thirtySecondsLeftWav
-        );
-      }
+
+    if (count === 31) {
+      notification(
+        "30 seconds left.",
+        { body: timerMessages[timer.timerType] },
+        settings.enableVoiceAssistance && thirtySecondsLeftAssistanceWav
+      );
+    } else if (
+      count === 60 &&
+      timer.timerType === TimerStatus.STAY_FOCUS
+    ) {
+      notification(
+        "60 seconds left.",
+        { body: "Pause all media playing if there's one." },
+        settings.enableVoiceAssistance
+          ? sixtySecondsLeftAssistanceWav
+          : sixtySecondsLeftBreakMp3
+      );
     }
 
     if (count === 0) {

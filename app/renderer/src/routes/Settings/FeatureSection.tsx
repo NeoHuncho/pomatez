@@ -1,4 +1,4 @@
-import { Collapse, Radio, Toggler, TogglerProps } from "components";
+import { Toggler, TogglerProps } from "components";
 import { ThemeContext } from "contexts";
 import { useAppDispatch, useAppSelector } from "hooks/storeHooks";
 import React, { useCallback, useContext } from "react";
@@ -12,19 +12,14 @@ import {
   setEnableStrictMode,
   setEnableVoiceAssistance,
   setMinimizeToTray,
-  setNotificationSounds,
   setNotificationType,
   setOpenAtLogin,
   setUseNativeTitlebar,
 } from "store";
 
-import {
-  NotificationSounds,
-  NotificationTypes,
-} from "store/settings/types";
+import { NotificationTypes } from "store/settings/types";
 import { detectOS } from "utils";
 import SettingSection from "./SettingSection";
-import NotificationSoundsSetting from "./notficationSounds/NotificationSoundsSetting";
 
 const FeatureSection: React.FC = () => {
   const settings = useAppSelector((state) => state.settings);
@@ -154,15 +149,6 @@ const FeatureSection: React.FC = () => {
     [dispatch]
   );
 
-  const onChangeNotificationSound = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(
-        setNotificationSounds(e.target.value as NotificationSounds)
-      );
-    },
-    [dispatch]
-  );
-
   return (
     <SettingSection heading="App Features">
       {featureList.map(
@@ -177,37 +163,6 @@ const FeatureSection: React.FC = () => {
           />
         )
       )}
-      <Collapse title="Notification Types">
-        <Radio
-          id="none"
-          label="none"
-          name="notification"
-          value={NotificationTypes.NONE}
-          checked={settings.notificationType === NotificationTypes.NONE}
-          onChange={onChangeNotificationProps}
-        />
-        <Radio
-          id="normal"
-          label="normal"
-          name="notification"
-          value={NotificationTypes.NORMAL}
-          checked={
-            settings.notificationType === NotificationTypes.NORMAL
-          }
-          onChange={onChangeNotificationProps}
-        />
-        <Radio
-          id="extra"
-          label="extra"
-          name="notification"
-          value={NotificationTypes.EXTRA}
-          checked={
-            settings.notificationType === NotificationTypes.EXTRA
-          }
-          onChange={onChangeNotificationProps}
-        />
-      </Collapse>
-      <NotificationSoundsSetting />
     </SettingSection>
   );
 };

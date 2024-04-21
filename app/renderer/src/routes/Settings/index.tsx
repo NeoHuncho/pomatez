@@ -1,15 +1,16 @@
-import React, { useState } from "react";
-import { getFromStorage, saveToStorage } from "utils";
-import { StyledSettings } from "styles";
 import { Alert } from "components";
+import { useState } from "react";
+import { StyledSettings } from "styles";
+import { getFromStorage, saveToStorage } from "utils";
 
-import FeatureSection from "./FeatureSection";
-import HelpSection from "./HelpSection";
-import ShortcutSection from "./ShortcutSection";
-import StickySection from "./StickySection";
-import SettingHeader from "./SettingHeader";
 import { useAppSelector } from "hooks/storeHooks";
 import { Updater } from "../../components";
+import FeatureSection from "./FeatureSection";
+import HelpSection from "./HelpSection";
+import NotificationSection from "./NotificationSection";
+import SettingHeader from "./SettingHeader";
+import ShortcutSection from "./ShortcutSection";
+import StickySection from "./StickySection";
 
 export default function Settings() {
   const alertState = getFromStorage("alert") || null;
@@ -35,6 +36,7 @@ export default function Settings() {
         />
       )}
       <FeatureSection />
+      <NotificationSection />
       <ShortcutSection />
       <HelpSection />
       <StickySection />
